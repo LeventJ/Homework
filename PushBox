@@ -5,7 +5,7 @@
 
 //定义地图
 char map[SIZE][SIZE]={
-    {'*','*','*','*','P','*','*',},
+    {'P',' ',' ',' ',' ','*','*',},
     {'*','*','*',' ','#',' ','*',},
     {'*','*',' ',' ',' ',' ','*',},
     {'*','*',' ',' ','*','*','*',},
@@ -15,7 +15,7 @@ char map[SIZE][SIZE]={
 };
 //初始化坐标
 int people_x=0;
-int people_y=4;
+int people_y=0;
 
 int box_x=1;
 int box_y=4;
@@ -27,6 +27,8 @@ int main()
 {
     char input;
     draw();
+    printf("this is a game of pushbox\n");
+    printf("and input 'q' to exit");
     while(input = _getch())
     {
         switch(input)
@@ -75,6 +77,10 @@ void move(int x,int y)
      case '#':
         switch(place_box)
         {
+        case '*':
+            system("cls");
+            printf("you hit the wall!\n  Game Over!");
+            break;
         case ' ':
             map[people_x+x][people_y+y] = 'P';
             map[people_x][people_y] = ' ';
