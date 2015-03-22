@@ -1,0 +1,116 @@
+#include <stdio.h>
+#include <conio.h>
+#include <stdlib.h>
+#define SIZE 8
+
+//定义地图
+char map[SIZE][SIZE]={
+    {'*','*','*','*','P','*','*',},
+    {'*','*','*',' ','#',' ','*',},
+    {'*','*',' ',' ',' ',' ','*',},
+    {'*','*',' ',' ','*','*','*',},
+    {'*','*',' ',' ','*','*','*',},
+    {'*','*',' ',' ',' ','X','*',},
+    {'*','*','*','*','*','*','*',},
+};
+//初始化坐标
+int people_x=0;
+int people_y=4;
+
+int box_x=1;
+int box_y=4;
+//声明函数
+void move(int x,int y);
+void draw();
+
+int main()
+{
+    char input;
+    draw();
+    while(input = _getch())
+    {
+        switch(input)
+        {
+            case 'w':
+                move(-1,0);
+                break;
+            case 'a':
+                move(0,-1);
+                break;
+            case 's':
+                move(1,0);
+                break;
+            case 'd':
+                move(0,1);
+                break;
+            case 'q':
+                printf("Game Over!\n");
+                return 0;
+                break;
+            default:
+                draw();
+        }
+    }
+
+    return 0;
+}
+
+void move(int x,int y)
+{
+    char place_people=map[people_x+x][people_y+y];
+    char place_box=map[box_x+x][box_y+y];
+    switch(place_people)
+    {
+    case '*':
+            system("cls");
+            printf("you hit the wall!\n  Game Over!");
+            break;
+    case ' ':
+        map[people_x+x][people_y+y] = 'P';
+        map[people_x][people_y] = ' ';
+        people_x += x;
+        people_y += y;
+        draw();
+        break;
+     case '#':
+        switch(place_box)
+        {
+        case ' ':
+            map[people_x+x][people_y+y] = 'P';
+            map[people_x][people_y] = ' ';
+            map[box_x+x][box_y+y] = '#';
+            people_x += x;
+            people_y += y;
+            box_x += x;
+            box_y += y;
+            draw();
+            break;
+         case 'X':
+            map[people_x+x][people_y+y] = 'P';
+            map[people_x][people_y] = ' ';
+            map[box_x+x][box_y+y] = '#';
+            people_x += x;
+            people_y += y;
+            draw();
+            printf("You Win!\n");
+            break;
+        }
+        break;
+
+    }
+
+}
+
+void draw()
+{
+    int i,j;
+    system("cls");
+    for(i=0;i<SIZE;i++)
+    {
+        for(j=0;j<SIZE;j++)
+        {
+            printf("%c",map[i][j]);
+        }
+        printf("\n");
+    }
+}
