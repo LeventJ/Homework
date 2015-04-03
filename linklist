@@ -1,0 +1,56 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define SIZE 100
+typedef struct studentsgrades{
+    char names[SIZE];
+    int mark;
+    struct SG * next;
+}SG;
+
+int main(void)
+{
+    SG * head = NULL;
+    SG * prev, *current;
+    char input[SIZE];
+
+    puts("请输入学生姓名:");
+//开始创建链表
+    while(gets(input) != NULL && input[0] != '\0')
+    {
+        current = (SG *)malloc(sizeof(SG));
+        if(head == NULL)
+            head = current;
+        else
+            prev->next = current;
+        current->next = NULL;
+        strcpy(current->names, input);
+        puts("输入学生的分数 <0-100>:");
+        scanf("%d",&current->mark);
+        while(getchar()!='\n')
+            continue;
+        puts("输入下一个学生的姓名（回车键结束输入）:");
+        prev = current;
+    }
+
+    if(head==NULL)
+        printf("你没有输入任何数据.");
+    else
+        printf("这是成绩单: \n");
+//显示链表
+    for(current=head;current;current = current->next)
+    {
+        printf("姓名: %s 分数 : %d\n",current->names,current->mark);
+    }
+
+//清除链表
+    for(current=head;current;current = current->next)
+    {
+        free(current);
+    }
+//清除结束
+    printf("结束\n");
+
+
+    return 0;
+}
